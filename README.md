@@ -24,4 +24,4 @@
 
 1. Clone the repository  
    ```bash
-   git clone https://github.com/your-username/pulsewave-visualize](https://github.com/PrasannTheDeveloper/PulseWave-Visualizer-App.git
+   git clone https://github.com/PrasannTheDeveloper/PulseWave-Visualizer-App.git
