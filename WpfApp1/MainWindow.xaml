@@ -1,0 +1,248 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Real-Time Audio Visualizer" 
+        WindowState="Maximized" 
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize">
+    <Grid>
+        <!-- Main visualizer canvas with transparent background -->
+        <Canvas x:Name="VisualizerCanvas" 
+                Background="Transparent" 
+                ClipToBounds="False">
+        </Canvas>
+
+        <!-- Custom Title Bar with Window Controls -->
+        <Border x:Name="TitleBar"
+                Background="#AA000000"
+                Height="35"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                CornerRadius="8,8,0,0"
+                Margin="10,10,10,0"
+                Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Title -->
+                <StackPanel Grid.Column="0" 
+                           Orientation="Horizontal" 
+                           VerticalAlignment="Center"
+                           Margin="15,0,0,0">
+                    <TextBlock Text="🎵" 
+                              Foreground="Cyan" 
+                              FontSize="16" 
+                              VerticalAlignment="Center"
+                              Margin="0,0,8,0"/>
+                    <TextBlock Text="Audio Visualizer" 
+                              Foreground="White" 
+                              FontSize="12" 
+                              VerticalAlignment="Center"
+                              FontWeight="SemiBold"/>
+                </StackPanel>
+
+                <!-- Window Control Buttons -->
+                <StackPanel Grid.Column="1" 
+                           Orientation="Horizontal" 
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0">
+
+                    <!-- Settings Button -->
+                    <Button x:Name="SettingsButton"
+                            Width="25" Height="25"
+                            Margin="5,0"
+                            Background="#33FFFFFF"
+                            BorderBrush="#66FFFFFF"
+                            BorderThickness="1"
+                            Click="SettingsButton_Click"
+                            ToolTip="Settings (S)">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="3">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#55FFFFFF"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#77FFFFFF"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock Text="⚙" 
+                                  Foreground="White" 
+                                  FontSize="12" 
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Minimize Button -->
+                    <Button x:Name="MinimizeButton"
+                            Width="25" Height="25"
+                            Margin="2,0"
+                            Background="#33FFFF00"
+                            BorderBrush="#66FFFF00"
+                            BorderThickness="1"
+                            Click="MinimizeButton_Click"
+                            ToolTip="Minimize">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="3">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#55FFFF00"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#77FFFF00"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock Text="−" 
+                                  Foreground="White" 
+                                  FontSize="14" 
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Close Button -->
+                    <Button x:Name="CloseButton"
+                            Width="25" Height="25"
+                            Margin="2,0"
+                            Background="#33FF0000"
+                            BorderBrush="#66FF0000"
+                            BorderThickness="1"
+                            Click="CloseButton_Click"
+                            ToolTip="Close (ESC)">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                   BorderBrush="{TemplateBinding BorderBrush}"
+                                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                                   CornerRadius="3">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#55FF0000"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#77FF0000"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock Text="×" 
+                                  Foreground="White" 
+                                  FontSize="16" 
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Settings Panel -->
+        <Border x:Name="SettingsPanel"
+                Background="#DD000000"
+                CornerRadius="15"
+                Padding="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="Collapsed"
+                BorderBrush="#FF444444"
+                BorderThickness="2">
+            <ScrollViewer MaxHeight="600" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="SettingsText"
+                           Foreground="#FFEEEEEE"
+                           FontFamily="Consolas"
+                           FontSize="14"
+                           LineHeight="20"
+                           TextWrapping="Wrap"
+                           Text="Loading settings...">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Color="Cyan" 
+                                        BlurRadius="5" 
+                                        ShadowDepth="0" 
+                                        Opacity="0.3"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Quick control hint (bottom-right corner) -->
+        <Border x:Name="ControlHint"
+                Background="#33000000"
+                CornerRadius="8"
+                Padding="8,4"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="10,0,10,50"
+                Opacity="0.6">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="🎵"
+                           Foreground="White"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,0"/>
+                <TextBlock Text="Right-click for controls"
+                           Foreground="White"
+                           FontSize="10"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+            <!-- Auto-hide after 4 seconds -->
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                           From="0.8" To="0.2" 
+                                           Duration="0:0:2"
+                                           BeginTime="0:0:4"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
+    </Grid>
+</Window>
